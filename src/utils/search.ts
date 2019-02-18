@@ -1,0 +1,175 @@
+import { ConfigMap } from '../models/search-context';
+import Token from '../models/token';
+import unaccent from './unaccent';
+
+const matchOperatorsRe = /[|\\{}()[\]^$+*?.]/g;
+function escapeForRegExp(input: string): string {
+  return input.replace(matchOperatorsRe, '\\$&');
+}
+
+function deepClone<T extends object>(obj: T): T {
+  return JSON.parse(JSON.stringify(obj)) as T;
+}
+
+function toWords(s: string): string[] {
+  return s.split(/\s+/);
+}
+
+export interface Modifier {
+  value: string;
+  fullText?: boolean;
+  label?: string;
+  modifier?: boolean;
+  section?: string;
+}
+
+export type Hint = string | Modifier;
+
+export function unquoted(value: string): string {
+  return value.replace(/"/g, '');
+}
+
+export function normalized(value: string): string {
+  return unquoted(unaccent(value)).replace(/^ */, '').toLocaleLowerCase();
+}
+
+export function getMatch(subString: string, list: Hint[], key?: 'value' | 'label'): Hint[] {
+  const regex = new RegExp(`\\b${escapeForRegExp(normalized(subString))}`, 'i');
+  return list.filter(function(value: Hint) {
+    if (key) { value = value[key]; }
+    if (!value) { return false; }
+    value = value as string;
+    return subString.length < value.length && regex.test(normalized(value));
+  });
+}
+
+export function getDefaultContent(configMap: ConfigMap, modifiersList: Modifier[]): Hint[] {
+  let allList: Modifier[] = [];
+  let mapContent = function(item: Hint): Modifier {
+    if (typeof item === 'string') { item = { value: item }; }
+    if (toWords(item.value).length > 1) { item.value = `"${item.value}"`; }
+    return item;
+  };
+
+  for (let key in configMap) {
+    if (configMap.hasOwnProperty(key)) { // Required by tslint
+      let config = configMap[key];
+      if (config.type === 'list' && config.content) {
+        config.content = config.content.map(mapContent);
+        let list = config.content.map(function(item: Modifier): Modifier {
+          let compositeValue = item.value;
+          compositeValue = key === '#' ? `#${compositeValue}` : `${key} ${compositeValue}`;
+          return {
+            fullText: true,
+            label: item.label,
+            section: config.sectionTitle,
+            value: compositeValue
+          };
+        });
+        allList = allList.concat(list);
+      }
+    }
+  }
+  const modifiers = modifiersList.map(function(item: Modifier) {
+    item.section = 'Narrow your Search';
+    return item;
+  });
+  return modifiers.concat(allList);
+}
+
+export function getAllModifiers(configMap: ConfigMap): Modifier[] {
+  let modifiers: Modifier[] = [];
+  for (let key in configMap) {
+    if (configMap.hasOwnProperty(key)) {
+      const config = configMap[key];
+      const section = config.type === 'date' ? 'time' : 'others';
+      modifiers.push({
+        label: config.defaultHint,
+        modifier: true,
+        section,
+        value: key
+      });
+    }
+  }
+  return modifiers;
+}
+
+export function tokenize(text: string, configMap: ConfigMap): Token[] {
+  if (!text) { return []; }
+
+  let tokens: Token[] = [];
+  let value = '';
+  let modifier = '';
+  let mode = 'default';
+
+  for (let i = 0; i <= text.length; i++) {
+    let character = text[i];
+
+    if (!character) {
+      if (modifier !== '' || value.length > 0) {
+        tokens.push(new Token(modifier, value, configMap));
+      }
+      return tokens;
+    }
+
+    switch (mode) {
+      case 'default':
+        if (character === '"') { mode = 'in-quote'; }
+
+        if (modifier !== '') {
+          if (character === ' ' && (/[^ ]/.test(value) || modifier === '#')) {
+            tokens.push(new Token(modifier, value, configMap));
+            modifier = '';
+            value = '';
+            mode = 'whitespace';
+          }
+          value += character;
+        } else {
+          if (character === ' ') {
+            if (value.length > 0) {
+              tokens.push(new Token(modifier, value, configMap));
+              modifier = '';
+              value = '';
+            }
+            mode = 'whitespace';
+          }
+          value += character;
+
+          if (configMap[value.toLowerCase()] !== undefined) {
+            modifier = value;
+            value = '';
+          }
+        }
+        break;
+
+      case 'whitespace':
+        if (character !== ' ') {
+          if (modifier !== '' || value.length > 0) {
+            tokens.push(new Token(modifier, value, configMap));
+            modifier = '';
+            value = '';
+          }
+          mode = 'default';
+        }
+
+        value += character;
+        break;
+
+      case 'in-quote':
+        if (character === '"') { mode = 'default'; }
+        value += character;
+        break;
+    }
+  }
+}
+
+export function prepareConfig(configMap: ConfigMap): ConfigMap {
+  configMap = deepClone(configMap);
+  const modifiers = getAllModifiers(configMap);
+  configMap['+'] = { type: 'modifier-list', content: modifiers };
+  configMap._default = {
+    content: getDefaultContent(configMap, modifiers),
+    type: 'default'
+  };
+  return configMap;
+}
