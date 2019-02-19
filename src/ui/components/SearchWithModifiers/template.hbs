@@ -1,1 +1,15 @@
-<div><h1>Welcome to Glimmer!</h1></div>
+<div class="search">
+  <SearchBox
+    @tokenConfig=this.tokenConfig
+    @value=this.query
+    @onValueChanged={{action "valueDidChange"}}
+    @onActiveTokenChanged={{action "updateActiveToken"}}
+    @onSearchTriggered={{action "performSearch"}}
+    @onClear={{action "performSearch"}}></SearchBox>
+  {{#if this.showModifierList}}
+    <SearchModifiers
+      @hintList=this.hintList
+      @focusOnInput=this.focusOnInput
+      @onSelect={{action "didSelectModifier"}}></SearchModifiers>
+  {{/if}}
+</div>
