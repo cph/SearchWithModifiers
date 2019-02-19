@@ -8,6 +8,7 @@ export default class Token {
   @tracked public value: string = '';
   @tracked private configMap: ConfigMap = {};
 
+  @tracked
   public get config(): SearchContextConfig | null {
     if (this.modifier) {
       return this.configMap[this.modifier.toLowerCase()];
@@ -17,18 +18,22 @@ export default class Token {
     return null;
   }
 
+  @tracked
   public get type(): string {
     return (this.config && this.config.type) || 'space';
   }
 
+  @tracked
   public get sectionTitle(): string {
     return this.config.sectionTitle;
   }
 
+  @tracked
   public get content(): Hint[] {
     return this.config.content;
   }
 
+  @tracked
   public get fullText(): string {
     return `${this.modifier}${this.value}`;
   }
@@ -57,10 +62,12 @@ export default class Token {
     }
   }
 
+  @tracked
   public get length(): number {
     return this.fullText.length;
   }
 
+  @tracked
   public get firstHint(): Hint {
     let value = this.normalizedValue;
     return this.hints.find((hint) => {
@@ -68,6 +75,7 @@ export default class Token {
     });
   }
 
+  @tracked
   public get subHint(): string | null {
     if (this.isValueValid && this.value.match(/"$/)) { return null; }
     const value = this.value.toLocaleLowerCase();
@@ -81,15 +89,18 @@ export default class Token {
     return null;
   }
 
+  @tracked
   public get hint(): string | null {
     return this.value.length > 0 ? this.subHint : this.config.defaultHint;
   }
 
+  @tracked
   public get hints(): Hint[] {
     const content = this.content;
     return content ? ListSource.getHints(this.value, content) : [];
   }
 
+  @tracked
   public get model(): Hint | null {
     if (this.isValueValid) {
       return ListSource.deserialize(this.normalizedValue, this.content);
@@ -114,10 +125,12 @@ export default class Token {
     this.notifyModelAssigned();
   }
 
+  @tracked
   public get normalizedValue(): string {
     return normalized(this.value);
   }
 
+  @tracked
   public get isValueValid() {
     return ListSource.validate(this.value, this.content);
   }
