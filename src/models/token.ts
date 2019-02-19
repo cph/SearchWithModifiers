@@ -1,9 +1,10 @@
 import { tracked } from '@glimmer/component';
 import { Hint, Modifier, normalized, unquoted } from '../utils/search';
+import Eventable from './eventable';
 import ListSource from './list-source';
 import { ConfigMap, SearchContextConfig } from './search-context';
 
-export default class Token {
+export default class Token extends Eventable {
   @tracked public modifier: string = '';
   @tracked public value: string = '';
   @tracked private configMap: ConfigMap = {};
@@ -113,7 +114,7 @@ export default class Token {
     const val = ListSource.serialize(newModel);
     if (typeof newModel === 'string') {
       this.value = val;
-      this.notifyModelAssigned();
+      this.trigger('modelAssigned');
       return;
     }
     newModel = newModel as Modifier;
@@ -122,7 +123,7 @@ export default class Token {
     } else {
       this.value = val;
     }
-    this.notifyModelAssigned();
+    this.trigger('modelAssigned');
   }
 
   @tracked
@@ -136,12 +137,13 @@ export default class Token {
   }
 
   constructor(modifier: string, value: string, configMap: ConfigMap) {
+    super();
     this.modifier = modifier;
     this.value = value;
     this.configMap = configMap;
   }
 
-  public autocomplete(): boolean {
+  public autoComplete(): boolean {
     const hint = this.firstHint;
     const subHint = this.subHint;
 
@@ -155,9 +157,5 @@ export default class Token {
       return true;
     }
     return false;
-  }
-
-  private notifyModelAssigned(): void {
-    // TODO: Loop through registered callbacks
   }
 }
