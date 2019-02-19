@@ -16,11 +16,12 @@ function toWords(s: string): string[] {
 }
 
 export interface Modifier {
-  value: string;
   fullText?: boolean;
   label?: string;
   modifier?: boolean;
+  searchOnEnter?: boolean;
   section?: string;
+  value: string;
 }
 
 export type Hint = string | Modifier;
