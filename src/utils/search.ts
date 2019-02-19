@@ -174,3 +174,30 @@ export function prepareConfig(configMap: ConfigMap): ConfigMap {
   };
   return configMap;
 }
+
+// Making node any allows us to test for nonstandard methods (IE) that we
+// might need to use and are not part of the typing.
+export function setCursor(node: any, pos: number): boolean {
+  if (node) {
+    if (node.createTextRange) {
+      let textRange = node.createTextRange();
+      textRange.collapse(true);
+      textRange.moveEnd('character', pos);
+      textRange.moveStart('character', pos);
+      textRange.select();
+
+      // This forces the browser to scroll to the cursor
+      node.blur();
+      node.focus();
+      return true;
+    } else if (node.setSelectionRange) {
+      node.setSelectionRange(pos, pos);
+
+      // This forces the browser to scroll to the cursor
+      node.blur();
+      node.focus();
+      return true;
+    }
+  }
+  return false;
+}
