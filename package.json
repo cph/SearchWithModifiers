@@ -28,7 +28,6 @@
     "ember-cli-inject-live-reload": "^1.6.1",
     "ember-cli-tslint": "^0.1.3",
     "ember-cli-uglify": "^2.0.0-beta.1",
-    "es6-promise": "^4.2.6",
     "qunitjs": "^2.3.3",
     "typescript": "~2.6.0"
   },
