@@ -8,7 +8,7 @@ interface SectionHintsMap {
   [key: string]: Hint[];
 }
 
-interface HintList {
+export interface HintList {
   section: string;
   list: Hint[];
 }
