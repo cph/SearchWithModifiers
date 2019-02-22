@@ -43,6 +43,7 @@ export default class ListKeyboardNavigator extends Component {
     return this._focused;
   }
   public set focused(value: boolean) {
+    if (value !== this._focused && this.args.onChangeFocus) { this.args.onChangeFocus(value); }
     this._focused = value;
     if (this._focused) { this.acquireFocus(); }
   }
