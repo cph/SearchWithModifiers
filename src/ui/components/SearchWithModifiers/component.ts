@@ -1,8 +1,8 @@
 import Component, { tracked } from '@glimmer/component';
-import { ConfigMap } from '../../../models/search-context';
-import Token from '../../../models/token';
 import { next } from '../../../utils/next';
 import { Hint, Modifier, prepareConfig } from '../../../utils/search';
+import { ConfigMap } from '../../../utils/search-context';
+import Token from '../../../utils/token';
 
 interface SectionHintsMap {
   [key: string]: Hint[];

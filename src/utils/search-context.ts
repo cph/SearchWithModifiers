@@ -1,5 +1,5 @@
 import { tracked } from '@glimmer/component';
-import { Hint } from '../utils/search';
+import { Hint } from './search';
 
 export interface RawModifier {
   hint: string;

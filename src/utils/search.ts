@@ -1,5 +1,5 @@
-import { ConfigMap } from '../models/search-context';
-import Token from '../models/token';
+import { ConfigMap } from './search-context';
+import Token from './token';
 import unaccent from './unaccent';
 
 const matchOperatorsRe = /[|\\{}()[\]^$+*?.]/g;

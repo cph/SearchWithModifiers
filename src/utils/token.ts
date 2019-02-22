@@ -1,7 +1,7 @@
 import { tracked } from '@glimmer/component';
-import { Hint, Modifier, normalized, unquoted } from '../utils/search';
 import Eventable from './eventable';
 import ListSource from './list-source';
+import { Hint, Modifier, normalized, unquoted } from './search';
 import { ConfigMap, SearchContextConfig } from './search-context';
 
 export default class Token extends Eventable {
