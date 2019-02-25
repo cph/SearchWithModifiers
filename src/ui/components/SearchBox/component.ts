@@ -276,7 +276,7 @@ export default class SearchBox extends Component {
     this.localValue = newValue;
     if (this.args.onValueChanged) { this.args.onValueChanged(this.localValue); }
     next(() => {
-      this.cursorLocation = this.mainInput.selectionStart;
+      this.cursorLocation = this.mainInput ? this.mainInput.selectionStart : 0;
       this.scrollBackgroundToMatchInput();
     });
   }
