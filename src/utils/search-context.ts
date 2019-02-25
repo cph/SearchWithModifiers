@@ -1,22 +1,11 @@
 import { tracked } from '@glimmer/component';
-import { Hint } from './search';
+import { ConfigMap, Hint } from './types';
 
-export interface RawModifier {
+interface RawModifier {
   hint: string;
   modifier: string;
   title: string;
   values: Hint[];
-}
-
-export interface SearchContextConfig {
-  content: Hint[];
-  defaultHint?: string;
-  sectionTitle?: string;
-  type: string;
-}
-
-export interface ConfigMap {
-  [index: string]: SearchContextConfig;
 }
 
 export default class SearchContext {

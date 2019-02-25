@@ -1,5 +1,5 @@
-import { ConfigMap } from './search-context';
 import Token from './token';
+import { ConfigMap, Hint, Modifier } from './types';
 import unaccent from './unaccent';
 
 const matchOperatorsRe = /[|\\{}()[\]^$+*?.]/g;
@@ -14,17 +14,6 @@ function deepClone<T extends object>(obj: T): T {
 function toWords(s: string): string[] {
   return s.split(/\s+/);
 }
-
-export interface Modifier {
-  fullText?: boolean;
-  label?: string;
-  modifier?: boolean;
-  searchOnEnter?: boolean;
-  section?: string;
-  value: string;
-}
-
-export type Hint = string | Modifier;
 
 export function unquoted(value: string): string {
   return value.replace(/"/g, '');

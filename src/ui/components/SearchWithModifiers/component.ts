@@ -1,16 +1,11 @@
 import Component, { tracked } from '@glimmer/component';
 import { next } from '../../../utils/next';
-import { Hint, Modifier, prepareConfig } from '../../../utils/search';
-import { ConfigMap } from '../../../utils/search-context';
+import { prepareConfig } from '../../../utils/search';
 import Token from '../../../utils/token';
+import { ConfigMap, Hint, HintList, Modifier } from '../../../utils/types';
 
 interface SectionHintsMap {
   [key: string]: Hint[];
-}
-
-export interface HintList {
-  section: string;
-  list: Hint[];
 }
 
 interface SampleQuery {

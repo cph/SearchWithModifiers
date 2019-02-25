@@ -1,7 +1,6 @@
 import Component, { tracked } from '@glimmer/component';
 import { next } from '../../../utils/next';
-import { Modifier } from '../../../utils/search';
-import { HintList } from '../SearchWithModifiers/component';
+import { HintList, Modifier } from '../../../utils/types';
 
 interface DisplayHint {
   category: string;

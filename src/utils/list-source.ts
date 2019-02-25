@@ -1,4 +1,5 @@
-import { getMatch, Hint, Modifier, normalized } from './search';
+import { getMatch, normalized } from './search';
+import { Hint, Modifier } from './types';
 
 export default class ListSource {
   public static serialize(value: Hint): string {
