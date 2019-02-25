@@ -5,11 +5,11 @@
     @onValueChanged={{action "valueDidChange"}}
     @onActiveTokenChanged={{action "updateActiveToken"}}
     @onSearchTriggered={{action "performSearch"}}
-    @onClear={{action "performSearch"}}></SearchBox>
+    @onClear={{action "performSearch"}} />
   {{#if this.showModifierList}}
     <SearchModifiers
       @hintList=this.hintList
       @focusOnInput=this.focusOnInput
-      @onSelect={{action "didSelectModifier"}}></SearchModifiers>
+      @onSelect={{action "didSelectModifier"}} />
   {{/if}}
 </div>
