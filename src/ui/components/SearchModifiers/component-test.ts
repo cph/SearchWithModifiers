@@ -27,6 +27,6 @@ module('Component: SearchModifiers', function(hooks) {
      * ```
      */
     await render(hbs`<SearchModifiers />`);
-    assert.ok(this.containerElement.querySelector('div'));
+    assert.ok(this.containerElement.querySelector('div.search-modifiers'));
   });
 });

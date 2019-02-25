@@ -26,7 +26,7 @@ module('Component: SearchBox', function(hooks) {
      * assert.dom('p').text('bar');
      * ```
      */
-    await render(hbs`<SearchBox />`);
-    assert.ok(this.containerElement.querySelector('div'));
+    await render(hbs`<SearchBox  @value="something" />`);
+    assert.ok(this.containerElement.querySelector('div.search-box'));
   });
 });
