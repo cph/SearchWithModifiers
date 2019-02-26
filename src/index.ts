@@ -17,5 +17,6 @@ app.registerInitializer({
 
 app.renderComponent('SearchWithModifiers', containerElement, null);
 
-app.boot();
-initializeCustomElements(app, { 'search-with-modifiers': 'SearchWithModifiers' });
+app.boot().then(() => {
+  initializeCustomElements(app, { 'search-with-modifiers': 'SearchWithModifiers' });
+});
