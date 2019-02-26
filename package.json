@@ -19,6 +19,7 @@
     "@glimmer/application-pipeline": "^0.13.0",
     "@glimmer/blueprint": "~0.13.0",
     "@glimmer/component": "^0.13.0",
+    "@glimmer/inline-precompile": "^1.0.0",
     "@glimmer/resolver": "^0.4.1",
     "@glimmer/web-component": "^0.3.1",
     "@types/qunit": "^2.0.31",
@@ -32,7 +33,6 @@
     "typescript": "~2.6.0"
   },
   "devDependencies": {
-    "@glimmer/inline-precompile": "^1.0.0",
     "@glimmer/test-helpers": "^0.31.1"
   },
   "engines": {
