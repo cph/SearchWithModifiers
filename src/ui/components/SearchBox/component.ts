@@ -1,8 +1,8 @@
 import Component, { tracked } from '@glimmer/component';
 import KEY from '../../../utils/keycodes';
 import { next } from '../../../utils/next';
-import { setCursor, tokenize } from '../../../utils/search';
-import Token from '../../../utils/token';
+import { setCursor } from '../../../utils/search';
+import Token, { tokenize } from '../../../utils/token';
 
 const NAVIGATIONAL_KEYS = [
   KEY.UP,

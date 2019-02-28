@@ -159,3 +159,72 @@ export default class Token extends Eventable {
     return false;
   }
 }
+
+export function tokenize(text: string, configMap: ConfigMap): Token[] {
+  if (!text) { return []; }
+
+  let tokens: Token[] = [];
+  let value = '';
+  let modifier = '';
+  let mode = 'default';
+
+  for (let i = 0; i <= text.length; i++) {
+    let character = text[i];
+
+    if (!character) {
+      if (modifier !== '' || value.length > 0) {
+        tokens.push(new Token(modifier, value, configMap));
+      }
+      return tokens;
+    }
+
+    switch (mode) {
+      case 'default':
+        if (character === '"') { mode = 'in-quote'; }
+
+        if (modifier !== '') {
+          if (character === ' ' && (/[^ ]/.test(value) || modifier === '#')) {
+            tokens.push(new Token(modifier, value, configMap));
+            modifier = '';
+            value = '';
+            mode = 'whitespace';
+          }
+          value += character;
+        } else {
+          if (character === ' ') {
+            if (value.length > 0) {
+              tokens.push(new Token(modifier, value, configMap));
+              modifier = '';
+              value = '';
+            }
+            mode = 'whitespace';
+          }
+          value += character;
+
+          if (configMap[value.toLowerCase()] !== undefined) {
+            modifier = value;
+            value = '';
+          }
+        }
+        break;
+
+      case 'whitespace':
+        if (character !== ' ') {
+          if (modifier !== '' || value.length > 0) {
+            tokens.push(new Token(modifier, value, configMap));
+            modifier = '';
+            value = '';
+          }
+          mode = 'default';
+        }
+
+        value += character;
+        break;
+
+      case 'in-quote':
+        if (character === '"') { mode = 'default'; }
+        value += character;
+        break;
+    }
+  }
+}
