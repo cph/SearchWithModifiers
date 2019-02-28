@@ -28,5 +28,8 @@ module('Component: SearchModifiers', function(hooks) {
      */
     await render(hbs`<SearchModifiers />`);
     assert.ok(this.containerElement.querySelector('div.search-modifiers'));
+    assert.ok(
+      this.containerElement.querySelector('div.list-keyboard-navigator'),
+      'Expected keyboard navigator');
   });
 });

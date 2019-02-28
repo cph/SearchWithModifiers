@@ -1,21 +1,21 @@
 <div class="search-box">
-  <textarea
-    rows=1
-    autocomplete="off"
-    autocapitalize="none"
-    spellcheck="false"
-    class="search-box-input"
-    placeholder={{@placeholder}}
-    value={{this.internalValue}}
-    maxlength={{this.maxlength}}
-    disabled={{@disabled}}
-    oninput={{action "updateInternalValue"}}
-    onpaste={{action "updateInternalValue"}}
-    oncut={{action "updateInternalValue"}}
-    onclick={{action "didClick"}}
-    onfocusin={{action "didReceiveFocus"}}
-    onfocusout={{action "didLoseFocus"}}
-    onkeydown={{action "onKeyDown"}}
-    onkeyup={{action "onKeyUp"}}>{{this.internalValue}}</textarea>
+    <textarea
+      rows=1
+      autocomplete="off"
+      autocapitalize="none"
+      spellcheck="false"
+      class="search-box-input"
+      placeholder={{@placeholder}}
+      maxlength={{this.maxlength}}
+      disabled={{@disabled}}
+      value={{this.internalValue}}
+      oninput={{action this.updateInternalValue}}
+      onpaste={{action this.updateInternalValue}}
+      oncut={{action this.updateInternalValue}}
+      onclick={{action this.didClick}}
+      onfocusin={{action this.didReceiveFocus}}
+      onfocusout={{action this.didLoseFocus}}
+      onkeydown={{action this.onKeyDown}}
+      onkeyup={{action this.onKeyUp}}>{{this.internalValue}}</textarea>
   <div class="search-box-hints">{{{backgroundText}}}</div>
 </div>

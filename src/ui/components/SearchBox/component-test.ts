@@ -28,5 +28,6 @@ module('Component: SearchBox', function(hooks) {
      */
     await render(hbs`<SearchBox  @value="something" />`);
     assert.ok(this.containerElement.querySelector('div.search-box'));
+    assert.ok(this.containerElement.querySelector('div.search-box textarea'), 'Expected textarea');
   });
 });

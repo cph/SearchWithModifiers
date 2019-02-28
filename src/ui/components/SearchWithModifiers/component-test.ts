@@ -9,5 +9,6 @@ module('Component: SearchWithModifiers', function(hooks) {
   test('it renders', async function(assert) {
     await this.render(hbs`<SearchWithModifiers />`);
     assert.ok(this.containerElement.querySelector('div.search'));
+    assert.ok(this.containerElement.querySelector('div.search-box'), 'Expected search box');
   });
 });
