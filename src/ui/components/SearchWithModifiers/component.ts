@@ -18,7 +18,7 @@ export default class SearchWithModifiers extends Component {
 
   @tracked
   public get query(): string {
-    return this.cachedQuery || this.args.query;
+    return this.cachedQuery || this.args && this.args.query || '';
   }
 
   public set query(str: string) {
@@ -27,7 +27,7 @@ export default class SearchWithModifiers extends Component {
 
   @tracked
   public get tokenConfig(): ConfigMap {
-    return prepareConfig(this.args.configHash);
+    return prepareConfig(this.args && this.args.configHash || {});
   }
 
   @tracked

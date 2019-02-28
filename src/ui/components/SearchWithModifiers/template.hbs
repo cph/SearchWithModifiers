@@ -1,15 +1,15 @@
 <div class="search">
   <SearchBox
-    @tokenConfig=this.tokenConfig
-    @value=this.query
+    @tokenConfig={{this.tokenConfig}}
+    @value={{this.query}}
     @onValueChanged={{action this.valueDidChange}}
     @onActiveTokenChanged={{action this.updateActiveToken}}
     @onSearchTriggered={{action this.performSearch}}
     @onClear={{action this.performSearch}} />
   {{#if this.showModifierList}}
     <SearchModifiers
-      @hintList=this.hintList
-      @focusOnInput=this.focusOnInput
+      @hintList={{this.hintList}}
+      @focusOnInput={{this.focusOnInput}}
       @onSelect={{action this.didSelectModifier}} />
   {{/if}}
 </div>

@@ -1,13 +1,13 @@
 <div class="search-modifiers">
   <ListKeyboardNavigator
       itemSelector=".search-modifier"
-      onHitTop=@focusOnInput
-      onTyping=@focusOnInput
-      focused=this.focused
+      onHitTop={{@focusOnInput}}
+      onTyping={{@focusOnInput}}
+      focused={{this.focused}}
       onItemSelected={{action this.didPressEnterOnNode}}
       onItemHighlighted={{action this.didHighlightNode}}
       onChangeFocus={{action this.didChangeFocus}}
-      items=flatList as |highlightedItem|>
+      items={{flatList}} as |highlightedItem|>
     {{#each @hintList as |section|}}
       <h5 class="search-modifier-section">{{section.section}}</h5>
       {{#each section.list as |item|}}
