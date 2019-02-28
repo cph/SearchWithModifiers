@@ -1,5 +1,6 @@
 import { ComponentManager, setPropertyDidChange } from '@glimmer/component';
 import initializeCustomElements from '@glimmer/web-component';
+import 'babel-polyfill/browser';
 import App from './main';
 
 const app = new App();
