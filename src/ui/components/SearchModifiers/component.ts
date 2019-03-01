@@ -18,6 +18,7 @@ interface DisplayHintList {
 export default class SearchModifiers extends Component {
   @tracked public focused: boolean = false;
 
+  @tracked
   public get currentIndex(): number { return this._currentIndex; }
   public set currentIndex(value: number) {
     if (value !== this.currentIndexWas) {

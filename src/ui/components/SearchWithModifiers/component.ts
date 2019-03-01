@@ -17,11 +17,7 @@ export default class SearchWithModifiers extends Component {
   @tracked private activeToken: Token;
 
   public get query(): string {
-    return this.cachedQuery || this.args && this.args.query || '';
-  }
-
-  public set query(str: string) {
-    this.cachedQuery = str;
+    return this._query || this.args && this.args.query || '';
   }
 
   public get tokenConfig(): ConfigMap {
@@ -81,7 +77,7 @@ export default class SearchWithModifiers extends Component {
 
   private sampleQueries: SampleQuery[] = [];
 
-  @tracked private cachedQuery: string = '';
+  @tracked private _query: string = '';
   @tracked private lastQuery: string = '';
 
   private get isQueryBlank(): boolean {
@@ -105,7 +101,7 @@ export default class SearchWithModifiers extends Component {
   }
 
   private valueDidChange(newValue: string) {
-    this.query = newValue;
+    this._query = newValue;
   }
 
   private updateActiveToken(newToken: Token) {
