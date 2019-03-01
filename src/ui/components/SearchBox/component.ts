@@ -20,12 +20,10 @@ function generateSpaceToken(): Token {
 export default class SearchBox extends Component {
   @tracked public cursorLocation: number = -1;
 
-  @tracked
   public get maxlength(): number {
     return this.args.maxlength || 250;
   }
 
-  @tracked
   public get internalValue(): string {
     if (this.externalValueChanged && this.args.value !== this.localValue) {
       this.updateInternalValue(this.args.value);
@@ -33,17 +31,17 @@ export default class SearchBox extends Component {
     return this.localValue;
   }
 
-  @tracked public get externalValueChanged(): boolean {
+  public get externalValueChanged(): boolean {
     if (this.args.value === this.externalValueWas) { return false; }
     this.externalValueWas = this.args.value;
     return true;
   }
 
-  @tracked get tokens(): Token[] {
+  get tokens(): Token[] {
     return tokenize(this.internalValue, this.args.tokenConfig);
   }
 
-  @tracked get activeTokenIndex(): number {
+  get activeTokenIndex(): number {
     const cursorLocation = this.cursorLocation;
     let sumIndex: number = 0;
     let startIndex: number;
@@ -61,7 +59,7 @@ export default class SearchBox extends Component {
     return -1;
   }
 
-  @tracked get activeToken(): Token | null {
+  get activeToken(): Token | null {
     const activeTokenIndex = this.activeTokenIndex;
     const tokens = this.tokens;
     let activeToken = null;
@@ -80,21 +78,21 @@ export default class SearchBox extends Component {
     return activeToken;
   }
 
-  @tracked public get hintValue(): string | null {
+  public get hintValue(): string | null {
     if (this.isLastTokenSelected) { return this.activeToken && this.activeToken.hint; }
     return null;
   }
 
-  @tracked public get isLastTokenSelected(): boolean {
+  public get isLastTokenSelected(): boolean {
     let tokensCount = this.tokens.length;
     return tokensCount > 0 && (tokensCount - 1) === this.activeTokenIndex;
   }
 
-  @tracked public get isCursorAtEndOfInput(): boolean {
+  public get isCursorAtEndOfInput(): boolean {
     return this.cursorLocation === this.internalValue.length;
   }
 
-  @tracked public get backgroundText(): string {
+  public get backgroundText(): string {
     let text: string[] = [];
     this.tokens.forEach((token) => {
       const fullText = token.fullText;
@@ -110,7 +108,7 @@ export default class SearchBox extends Component {
     return text.join('');
   }
 
-  @tracked public get focused(): boolean { return this.internalFocused; }
+  public get focused(): boolean { return this.internalFocused; }
   public set focused(value: boolean) {
     this.internalFocused = value;
     if (this.internalFocused) { this.mainInput.focus(); }
@@ -118,7 +116,6 @@ export default class SearchBox extends Component {
 
   @tracked private localValue: string = '';
   @tracked private externalValueWas: string = '';
-
   @tracked private internalFocused: boolean = false;
 
   private lastActiveToken: Token;

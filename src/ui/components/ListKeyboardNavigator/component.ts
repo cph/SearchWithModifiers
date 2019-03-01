@@ -4,12 +4,11 @@ import { next } from '../../../utils/next';
 import { scrollIntoView, scrollToBottom, scrollToTop } from '../../../utils/scroll-helpers';
 
 export default class ListKeyboardNavigator extends Component {
-  @tracked
+
   public get tabIndex(): number {
     return this.args.tabIndex || 0;
   }
 
-  @tracked
   public get selectedItem(): object {
     if (this.args.selectedItem !== this.selectedItemWas) {
       next(() => { this.highlightSelectedItem(); });
@@ -18,27 +17,22 @@ export default class ListKeyboardNavigator extends Component {
     return this.args.selectedItem;
   }
 
-  @tracked
   public get itemSelector(): string {
     return this.args.itemSelector || 'li';
   }
 
-  @tracked
   public get highlightFromSelection(): boolean {
     return this.args.highlightFromSelection || false;
   }
 
-  @tracked
   public get selectImmediately(): boolean {
     return this.args.selectImmediately || false;
   }
 
-  @tracked
   public get highlightOnMouseOver(): boolean {
     return !this.selectImmediately;
   }
 
-  @tracked
   public get focused(): boolean {
     return this._focused;
   }
@@ -48,7 +42,6 @@ export default class ListKeyboardNavigator extends Component {
     if (this._focused) { this.acquireFocus(); }
   }
 
-  @tracked
   public get items(): object[] {
     if (this.args.items && this.args.items.length !== this.itemCountWas) {
       this.reset();
@@ -57,14 +50,12 @@ export default class ListKeyboardNavigator extends Component {
     return this.args.items || [];
   }
 
-  @tracked
   public get highlightedIndex(): number {
     const index = this.highlightedItemIndex;
     if (!this.highlightFromSelection) { return index; }
     return index < 0 ? this.selectedItemIndex : index;
   }
 
-  @tracked
   public get highlightedItem(): object {
     let index = this.highlightedIndex;
     if (index < 0 || this.items.length === 0) { return null; }
@@ -72,7 +63,6 @@ export default class ListKeyboardNavigator extends Component {
     return this.items[index];
   }
 
-  @tracked
   public get selectedItemIndex(): number {
     if (!this.selectedItem) { return -1; }
     return this.items.indexOf(this.selectedItem);

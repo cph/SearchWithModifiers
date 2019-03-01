@@ -16,10 +16,8 @@ interface DisplayHintList {
 }
 
 export default class SearchModifiers extends Component {
-
   @tracked public focused: boolean = false;
 
-  @tracked
   public get currentIndex(): number { return this._currentIndex; }
   public set currentIndex(value: number) {
     if (value !== this.currentIndexWas) {
@@ -28,7 +26,6 @@ export default class SearchModifiers extends Component {
     this._currentIndex = value;
   }
 
-  @tracked
   public get hintList(): DisplayHintList[] {
     if (this.args.hintList.length !== this.hintListLengthWas) {
       this.hintListLengthWas = this.args.hintList.length;
@@ -52,7 +49,6 @@ export default class SearchModifiers extends Component {
     });
   }
 
-  @tracked
   public get flatList(): DisplayHint[] {
     return this.hintList.reduce((list: DisplayHint[], item: DisplayHintList): DisplayHint[] => {
       return list.concat(item.list);

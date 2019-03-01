@@ -16,7 +16,6 @@ interface SampleQuery {
 export default class SearchWithModifiers extends Component {
   @tracked private activeToken: Token;
 
-  @tracked
   public get query(): string {
     return this.cachedQuery || this.args && this.args.query || '';
   }
@@ -25,19 +24,16 @@ export default class SearchWithModifiers extends Component {
     this.cachedQuery = str;
   }
 
-  @tracked
   public get tokenConfig(): ConfigMap {
     return prepareConfig(this.args && this.args.configHash || {});
   }
 
-  @tracked
   public get showModifierList(): boolean {
     if (this.isHintListEmpty) { return false; }
     const type = this.activeToken && this.activeToken.type;
     return type && (type !== 'space');
   }
 
-  @tracked
   public get hintList(): HintList[] {
     const token = this.activeToken;
     const hints = token && token.hints;
@@ -88,7 +84,6 @@ export default class SearchWithModifiers extends Component {
   @tracked private cachedQuery: string = '';
   @tracked private lastQuery: string = '';
 
-  @tracked
   private get isQueryBlank(): boolean {
     return !this.query;
   }
