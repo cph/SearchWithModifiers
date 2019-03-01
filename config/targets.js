@@ -6,6 +6,7 @@ let browsers = [
   'last 2 Chrome versions',
   'last 2 Firefox versions',
   'last 2 Safari versions',
+  'ie 11'
 ];
 
 if (process.env.EMBER_ENV === 'test') {

@@ -1,0 +1,21 @@
+<div class="search-modifiers">
+  <ListKeyboardNavigator
+      itemSelector=".search-modifier"
+      onHitTop={{@focusOnInput}}
+      onTyping={{@focusOnInput}}
+      focused={{this.focused}}
+      onItemSelected={{action this.didPressEnterOnNode}}
+      onItemHighlighted={{action this.didHighlightNode}}
+      onChangeFocus={{action this.didChangeFocus}}
+      items={{flatList}} as |highlightedItem|>
+    {{#each @hintList as |section|}}
+      <h5 class="search-modifier-section">{{section.section}}</h5>
+      {{#each section.list as |item|}}
+        <div {{action this.selectItem item.index}} class="search-modifier {{if (eq item.index currentIndex) "current"}} {{if (eq item.index highlightedItem.index) "highlighted"}}">
+          <span class="search-modifier-value">{{item.value}}</span>
+          {{#if item.label}}<span class="search-modifier-label">{{item.label}}</span>{{/if}}
+        </div>
+      {{/each}}
+    {{/each}}
+  </ListKeyboardNavigator>
+</div>
